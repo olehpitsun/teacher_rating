@@ -23,6 +23,7 @@ class IndexController extends Controller
         $articles = Articles::orderBy('scholar', 'desc')->get();
         $teachers = Teachers::all();
 
+        $teachersInfo = array();
 
 
         foreach ($teachers as $teacher) {
@@ -31,8 +32,19 @@ class IndexController extends Controller
             $main->add(new ScholarScienceBase());
             $main->add(new ScopusScienceBase());
 
-            dd($main->calculateHIndex($teacher->id));
+            $main->calculateHIndex($teacher->id);
+
+
+
+            $teachersEntity = new TeacherEntity($teacher->fullname);
+            $teachersEntity->setScholarHIndex($main->getScholar());
+            $teachersEntity->setScopusHIndex($main->getScopus());
+
+            $teachersInfo = $teachersEntity;
+
         }
+
+        dd($teachersInfo);
 
 
 

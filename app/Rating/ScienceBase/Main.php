@@ -34,11 +34,19 @@ class Main {
             }
         }
 
-        return "Scholar = " . $this->scholar_h_index  . " Scopus = " . $this->scopus_h_index;
+        //return "Scholar = " . $this->scholar_h_index  . " Scopus = " . $this->scopus_h_index;
     }
 
     public function getHIndex($id, $IScienceBase)
     {
         return $IScienceBase->getHIndex($id);
+    }
+
+    public function getScholar(){
+        return $this->scholar_h_index;
+    }
+
+    public function getScopus(){
+        return $this->scopus_h_index;
     }
 }
