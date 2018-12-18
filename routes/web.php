@@ -84,12 +84,12 @@ Route::get('/managenews/{id}/edit', 'ManagenewsController@edit')->middleware('ad
 Route::put('/managenews/{id}', 'ManagenewsController@update')->middleware('admin');
 Route::delete('/managenews/{id}', 'ManagenewsController@destroy')->middleware('admin');
 
-Route::get('/managearticles', 'ManagearticlesController@index')->middleware('admin');
-Route::get('/managearticles/create', 'ManagearticlesController@create')->middleware('admin');
-Route::post('/managearticles', 'ManagearticlesController@store')->middleware('admin');
-Route::get('/managearticles/{id}/edit', 'ManagearticlesController@edit')->middleware('admin');
-Route::put('/managearticles/{id}', 'ManagearticlesController@update')->middleware('admin');
-Route::delete('/managearticles/{id}', 'ManagearticlesController@destroy')->middleware('admin');
+Route::get('/manageteachers', 'ManageteachersController@index')->middleware('admin');
+Route::get('/manageteachers/create', 'ManageteachersController@create')->middleware('admin');
+Route::post('/manageteachers', 'ManageteachersController@store')->middleware('admin');
+Route::get('/manageteachers/{id}/edit', 'ManageteachersController@edit')->middleware('admin');
+Route::put('/manageteachers/{id}', 'ManageteachersController@update')->middleware('admin');
+Route::delete('/manageteachers/{id}', 'ManageteachersController@destroy')->middleware('admin');
 
 Route::get('/manageabiturients', 'ManageabiturientsController@index')->middleware('admin');
 Route::delete('/manageabiturients/{id}', 'ManageabiturientsController@destroy')->middleware('admin');

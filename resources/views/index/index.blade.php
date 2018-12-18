@@ -4,39 +4,14 @@
 
 @section('content')
 
-
     <link rel="stylesheet" type="text/css" href="./css/menu.css ">
-
     <link rel="stylesheet" type="text/css" href="./css/users.css">
     <link rel="stylesheet" type="text/css" href="./css/articles.css">
 
 
-
-    <div class="container" style="height: 500px;background-color: #596778;background: url(/images/MyCollages.jpg);background-repeat: no-repeat;background-position: center; background-size: 1450px ">
-
-        <div class="menu1" style="padding-top: 2%; padding-bottom: 1%">
-            <h2>TNEU Computer Vision & Artificial Intelligence Scientific Group</h2>
-
-            <nav class="menu">
-                <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-                <label class="menu-open-button" for="menu-open">
-                    <span class="lines line-1"></span>
-                    <span class="lines line-2"></span>
-                    <span class="lines line-3"></span>
-                </label>
-
-                <a href="#news" class="menu-item blue"> <img src="/images/icons/news_new.svg" alt="publications" /> </a>
-                <a href="#search" class="menu-item green"> <img src="/images/icons/search.svg" alt="search publication" /> </a>
-                <a href="#HIAMS" class="menu-item red"> <img src="/images/icons/window.svg" alt="HIAMS" />  </a>
-                <a href="#top-publication" class="menu-item purple"> <img src="/images/icons/newarticles.png " alt="New publications" /> </a>
-                <a href="#users" class="menu-item orange"> <img src="/images/icons/team.svg" alt="Team" /> </a>
-                <a href="#contact" class="menu-item lightblue"> <img src="/images/icons/facebook.svg" alt="facebook" /> </a>
-            </nav>
-        </div>
-    </div>
     <div class="content" style="-webkit-text-fill-color: #455A64; text-align: center">
-        <h2>Наукова група займається дослідженнями в області комп'ютерного зору та штучного інтелекту на базі
-            кафедри комп'ютерної інженерії ТНЕУ
+        <h2>
+            Кафедри комп'ютерної інженерії ТНЕУ
         </h2>
     </div>
     <section id="search">
@@ -72,36 +47,15 @@
         </div>
 
 
-        <div class="column">
-            <div class="default text">Автори</div>
-            <div class="styled-select slate">
-
-                <select v-on:click="search()" v-model="query">
-                    <option disabled value="Автори">Автори</option>
-                    <option>Березький</option>
-                    <option>Дубчак</option>
-                    <option>Мельник</option>
-                    <option>Батько</option>
-                    <option>Піцун</option>
-                    <option>Вербовий</option>
-                    <option>Ігнатєв</option>
-                    <option>Лящинський</option>
-                </select>
-            </div>
-
         </div>
         <div class="column">
-
-
-
 
             <div class="default text">Рік</div>
             <div class="styled-select slate">
                 <select v-on:click="search()" v-model="query">
-                    <option disabled value="Рік">Рік</option>
-                    <option>2016</option>
-                    <option>2017</option>
-                    <option>2018</option>
+                    <option disabled value="Scholar">Scholar</option>
+                    <option>Scholar</option>
+                    <option>Scopus</option>
                 </select>
             </div>
 
@@ -110,10 +64,10 @@
 
 
     <div class="ui relaxed divided list" style="margin: 5%">
-            <div class="item" v-for="article in articles">
+            <div class="item" v-for="article in teachers">
                 <i class=""><img src="" height="22px"></i>
                 <div class="content">
-                    <a class="header" href="" >@{{article.text}}</a>
+                    <a class="header" href="" >@{{article->fullname}}</a>
                     <div class="description">@{{article.created_at}}</div>
                 </div>
             </div>
@@ -121,154 +75,44 @@
 </section>
 
 
-    <section id="HIAMS"  >
-        <div class="ui massive horizontal divided list">
+    <section id="teacherList" style="padding: 1%" >
+        <div class="container">
 
-            @forelse($scholars as $scholar)
-                <div class="item">
-                    <div class="content">
-                        <div class="header">{{$scholar["name"]}}</div>
-
-                    </div>
-                </div>
-
-            @empty
-                No news
-            @endforelse
+            <table class="ui very basic  celled table">
+                <thead>
+                    <tr>
+                        <th>Викладач</th>
+                        <th>Scholar</th>
+                        <th>Scopus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($teachersInfo as $teacher)
+                    <tr>
+                        <td>
+                            <h4 class="ui image header">
+                                <img src="/images/participants/07.jpg" class="ui mini rounded image">
+                                <div class="content">
+                                    {{$teacher->fullname}}
+                                    <div class="sub header">Human Resources
+                                    </div>
+                                </div>
+                            </h4></td>
+                        <td>
+                            {{$teacher->scholar_h_index}}
+                        </td>
+                        <td>
+                            {{$teacher->scopus_h_index}}
+                        </td>
+                    </tr>
+                @empty
+                    No info
+                @endforelse
+                </tbody>
+            </table>
         </div>
     </section>
 
-    <section id="HIAMS"  >
-        <div class="ui massive horizontal divided list">
-
-            @forelse($articles as $article)
-            <div class="item">
-                <img class="ui avatar image" src="/images/icons/{{$article->image}}">
-                <div class="content">
-                    <div class="header">{{$article->surname}} {{$article->name}} {{$article->fathername}}</div>
-                    {{$article->scholar}}
-                </div>
-            </div>
-
-            @empty
-                No news
-            @endforelse
-        </div>
-    </section>
-
-
-
-
-
-
-    <section id="news">
-    <div class="container" style="text-align: center; background-color: #FDD835; padding: 1% ">
-        <h2 class="ui header">
-            <img class="ui image" src="/images/icons/setting%20sign.svg_0.png ">
-            <div class="content">
-                Статті
-            </div>
-        </h2>
-    </div>
-
-
-        <div class="ui stackable grid" style="background-color: #FDD835">
-
-            @forelse($news as $n)
-                <div class="five wide column" style="padding-left: 2%">
-                    <div class="single-article">
-                        <div class="article-img">
-                            <a href="/{{$n->href}}"><img src="images/articles/{{$n->img}}" width="100%" height="250px" alt="{{$n->title}}"></a>
-                            <div class="article-content">
-                                <div class="article-left">
-                                    <?php $ym = explode('-', $n->created_at);
-                                    $day = explode(" ", $ym[2]);
-                                    ?>
-                                    <h3><a href=""><?php echo $day[0] . " "; ?><?php echo $ym[1] ; ?><br><?php echo $ym[0]; ?></a></h3>
-                                </div>
-                                <div class="article-right">
-                                    <p><a href="/{{$n->href}}">{{$n->title}}</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            @empty
-                No news
-            @endforelse
-        </div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section id="top-publication" >
-    <div class="container" style="text-align: center; background-color: #E0E0E0; padding: 1%">
-        <h2 class="ui header">
-            <img class="ui image" src="/images/icons/Optimax-Icons-Technical-Articles.png ">
-            <div class="content">
-                Top публікації
-            </div>
-        </h2>
-    </div>
-
-
-
-
-    <div class="ui relaxed divided list" style="padding: 5%; background-color: #E0E0E0">
-
-        @forelse($articles as $article)
-
-            <div class="item">
-                <i class=""><img src="images/icons/{{$article->image}}" height="22px"></i>
-                <div class="content">
-                    <a class="header" href="{{$article->href}}">{{$article->text}}</a>
-                    <div class="description">{{$article->created_at}}</div>
-                </div>
-            </div>
-
-        @empty
-            No news
-        @endforelse
-
-
-    </div>
-</section>
 
 
 
@@ -278,7 +122,7 @@
             <h2 class="ui header">
                 <img class="ui image" src="/images/icons/users.png ">
                 <div class="content">
-                    Учасники
+                    Викладачі
                 </div>
             </h2>
         </div>
@@ -523,5 +367,4 @@
 @endsection
 @push('scripts')
     <script src="/js/myapp.js"></script>
-
 @endpush

@@ -13,12 +13,12 @@ class HIndex
 {
 
     public static function getScholarHindex($href){
-/*
+
         $html = file_get_contents($href);
 
         preg_match_all('~<td class=[\'"]?gsc_rsb_std["\']?>(.+?)<\/td>~is', $html, $w);
 
-        return $w[1][2];*/
-        return 4;
+        return $w[1][2];
+        //return 4;
     }
 }

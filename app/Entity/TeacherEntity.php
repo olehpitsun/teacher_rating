@@ -12,10 +12,10 @@ namespace App\Entity;
 class TeacherEntity
 {
     private $id;
-    private $fullname;
-    private $scholar_citation;
-    private $scholar_h_index;
-    private $scopus_h_index;
+    public $fullname;
+    public $scholar_citation;
+    public $scholar_h_index;
+    public $scopus_h_index;
 
     /**
      * TeacherEntity constructor.
@@ -25,6 +25,15 @@ class TeacherEntity
     {
         $this->fullname = $fullname;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
+
 
     /**
      * @return mixed

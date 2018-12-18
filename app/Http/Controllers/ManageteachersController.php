@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Articles;
+use App\Teachers;
 
-class ManagearticlesController extends Controller
+class ManageteachersController extends Controller
 {
     public function index()
     {
-        $articles = Articles::all();
+        $teachers = Teachers::all();
 
-        return view('managearticles.index', compact('articles'));
+        return view('manageteachers.index', compact('teachers'));
     }
 
     /**
@@ -21,7 +21,7 @@ class ManagearticlesController extends Controller
      */
     public function create()
     {
-        return view('managearticles.create');
+        return view('manageteachers.create');
     }
 
     /**
@@ -32,13 +32,12 @@ class ManagearticlesController extends Controller
      */
     public function store(Request $request)
     {
-        Articles::create([
-            'text' => $request->text,
-            //'en_text' => $request->en_text,
-            'href' => $request->href,
-            //'year_id' => $request->year_id,
+        Teachers::create([
+            'fullname' => $request->fullname,
+            'scholar_href' => $request->scholar_href,
+            'scopus_href' => $request->scopus_href,
         ]);
-        return redirect('/managearticles');
+        return redirect('/manageteachers');
     }
 
     /**
@@ -49,8 +48,8 @@ class ManagearticlesController extends Controller
      */
     public function edit($id)
     {
-        $articles = Articles::findOrFail($id);
-        return view('managearticles.edit', compact('articles'));
+        $teacher = Teachers::findOrFail($id);
+        return view('manageteachers.edit', compact('teacher'));
     }
 
     /**
@@ -62,10 +61,10 @@ class ManagearticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article = Articles::findOrFail($id);
-        $article->update($request->all());
+        $teacher = Teachers::findOrFail($id);
+        $teacher->update($request->all());
 
-        return redirect('/managearticles');
+        return redirect('/manageteachers');
     }
 
     /**
@@ -76,8 +75,8 @@ class ManagearticlesController extends Controller
      */
     public function destroy($id)
     {
-        Articles::destroy($id);
+        Teachers::destroy($id);
 
-        return redirect('/managearticles');
+        return redirect('/manageteachers');
     }
 }

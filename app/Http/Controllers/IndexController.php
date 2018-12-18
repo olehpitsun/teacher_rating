@@ -7,24 +7,19 @@ include '/shd/simple_html_dom.php';
 use App\Rating\ScienceBase\scholar\ScholarScienceBase;
 use App\Rating\ScienceBase\scopus\ScopusScienceBase;
 use Illuminate\Http\Request;
-use App\Participants;
-use App\News;
 use App\Articles;
 use App\Teachers;
 use App\Entity\TeacherEntity;
 use App\Rating\ScienceBase\Main;
+use App\Sort\Sort;
 
 class IndexController extends Controller
 {
+
     public function index()
     {
-        $participants = Participants::all();
-        $news = News::all();
-        $articles = Articles::orderBy('scholar', 'desc')->get();
         $teachers = Teachers::all();
-
         $teachersInfo = array();
-
 
         foreach ($teachers as $teacher) {
 
@@ -34,67 +29,49 @@ class IndexController extends Controller
 
             $main->calculateHIndex($teacher->id);
 
-
-
             $teachersEntity = new TeacherEntity($teacher->fullname);
             $teachersEntity->setScholarHIndex($main->getScholar());
             $teachersEntity->setScopusHIndex($main->getScopus());
 
-            $teachersInfo = $teachersEntity;
-
+            array_push($teachersInfo, $teachersEntity);
         }
 
-        dd($teachersInfo);
+        $teachersInfo = Sort::sortByScholar($teachersInfo);
 
-
-
-        $html = file_get_html("https://scholar.google.com.ua/citations?user=szP0KhEAAAAJ&hl=uk");
-        $d= mb_convert_encoding($html, 'utf-8', mb_detect_encoding($html));
-
-        $links = array();
-
-        preg_match_all('#<div\sid="gsc_prf_in">(.+?)</div>#su', $d, $q);
-        $links[] = $q[1][0];
-
-        preg_match_all('~<td class=[\'"]?gsc_rsb_std["\']?>(.+?)<\/td>~is', $d, $w);
-        $links[] = $w[1][0];
-        $links[] = $w[1][2];
-        $links[] = $w[1][4];
-
-
-        /*
-        foreach($html->find('td[class="gsc_rsb_std"]') as $td) {
-            $links[] = $td->innertext ;
-        }
-
-        foreach($html->find('div[id="gsc_prf_in"]') as $name) {
-            $links[] = $name->innertex ;
-        }
-        */
-
-
-
-
-        $scholar1 = array (
-            "name"=>$links[0],
-            "citation"=>$links[1],
-            "h_index"=>$links[2],
-            "h_10"=>$links[3],
-
-        );
-        $scholar2 = array (
-            "name"=>$links[0],
-            "citation"=>$links[1],
-            "h_index"=>$links[2],
-            "h_10"=>$links[3],
-
-        );
-
-        $scholars = array($scholar1, $scholar2);
-
-
-        return view('index.index', compact('participants', 'news', 'articles', 'scholars'));
+        return view('index.index', compact('teachersInfo'));
     }
+
+    public function sortByHIndex(Request $request){
+        $error = ['error' => 'No results found, please try with different keywords.'];
+
+        dd($request);
+        if($request->has('q')) {
+            $teachers = Teachers::all();
+            $teachersInfo = array();
+
+            foreach ($teachers as $teacher) {
+
+                $main = new Main();
+                $main->add(new ScholarScienceBase());
+                $main->add(new ScopusScienceBase());
+
+                $main->calculateHIndex($teacher->id);
+
+                $teachersEntity = new TeacherEntity($teacher->fullname);
+                $teachersEntity->setScholarHIndex($main->getScholar());
+                $teachersEntity->setScopusHIndex($main->getScopus());
+
+                array_push($teachersInfo, $teachersEntity);
+            }
+
+            $teachersInfo = Sort::sortByScholar($teachersInfo);
+
+            //$posts= Articles::where('text', 'LIKE', '%' .$request->get('q'). '%')->get();
+            return $teachersInfo;
+        }
+        return $error;
+    }
+
 
     public function search(Request $request)
     {
@@ -102,45 +79,16 @@ class IndexController extends Controller
         $error = ['error' => 'No results found, please try with different keywords.'];
 
         if($request->has('q')) {
-
-            //dd($request->has('q'));
-            //$posts = Articles::with()
-            // Используем синтаксис Laravel Scout для поиска по таблице products.
-            //$posts = Articles::all();
-
             $posts= Articles::where('text', 'LIKE', '%' .$request->get('q'). '%')->get();
-
-
-
-            // Если есть результат есть, вернем его, если нет  - вернем сообщение об ошибке.
             return $posts->count() ? $posts : $error;
-
         }
-
         return $error;
     }
 
     public function abitur(Request $request)
     {
-
         $error = ['error' => 'No results found, please try with different keywords.'];
-
-        //if($request->has('q')) {
-
-            //dd($request->has('q'));
-            //$posts = Articles::with()
-            // Используем синтаксис Laravel Scout для поиска по таблице products.
-            //$posts = Articles::all();
-
-            $posts= Articles::where('text', 'LIKE', '%' .$request->get('q'). '%')->get();
-
-
-
-            // Если есть результат есть, вернем его, если нет  - вернем сообщение об ошибке.
-            return $posts->count() ? $posts : $error;
-
-        //}
-
-        //return $error;
+        $posts= Articles::where('text', 'LIKE', '%' .$request->get('q'). '%')->get();
+        return $posts->count() ? $posts : $error;
     }
 }

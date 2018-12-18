@@ -22,6 +22,11 @@ Route::get('/search', [
     'uses' => 'IndexController@search'
 ]);
 
+Route::get('/sortByHIndex', [
+    'as' => 'api.sortByHIndex',
+    'uses' => 'IndexController@sortByHIndex'
+]);
+
 /*
 Route::get('/users', [
     'as' => 'api.users',
