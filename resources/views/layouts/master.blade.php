@@ -24,25 +24,18 @@
         <script src="/semantic/out/semantic.js"></script>
         <script>
             $(function () {
-                //var $lists = $('.list-group li').click(function(e) {
 
                 $(".item").click(function () {
                     $(this).toggleClass("active");
                     e.preventDefault(); /*ignores actual link*/
                 });
-
-                //$lists.filter(".active").removeClass("active");
-                //$(this).addClass('active');
-                //e.preventDefault() /*ignores actual link*/
-                //});
             });
-
         </script>
-        <![endif]-->
     </head>
-
     <body>
+
     @include('layouts.top-menu')
+
 
     <div class="container">
 

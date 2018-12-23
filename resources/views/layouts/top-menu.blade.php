@@ -1,5 +1,8 @@
-<div class="ui inverted menu">
+<?php
+$url = "$_SERVER[REQUEST_URI]";
+if($url != '/' ) { ?>
 
+<div class="ui inverted menu">
     @if(Sentinel::check())
         <div class="right menu">
             <form action="/logout" method="post" id="logout-form">
@@ -14,11 +17,12 @@
         </div>
     @endif
 
-    <a class="active teal item">
+    <a class="item">
         @if(Sentinel::check())
             Hello, {{Sentinel::getUser()->first_name}}
         @else
     </a>
     @endif
 </div>
+<?php } ?>
 

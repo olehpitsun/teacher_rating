@@ -4,74 +4,40 @@
 
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="./css/menu.css ">
-    <link rel="stylesheet" type="text/css" href="./css/users.css">
-    <link rel="stylesheet" type="text/css" href="./css/articles.css">
-
-
-    <div class="content" style="-webkit-text-fill-color: #455A64; text-align: center">
-        <h2>
-            Кафедри комп'ютерної інженерії ТНЕУ
-        </h2>
+    <div>
+        <h1>
+            Рейтинг викладачів кафедри комп'ютерної інженерії
+        </h1>
     </div>
+
     <section id="search">
-
-    <div class="container" style="text-align: center; padding: 1%;">
-        <h2 class="ui header">
-            <img class="ui image" src="/images/icons/search_file-512.png ">
-            <div class="content">
-                Пошук публікацій
-            </div>
-        </h2>
-    </div>
-
-    <div class="ui three column middle aligned very relaxed stackable grid">
-        <div class="column">
-
-            <div class="container" style="text-align: center">
-                <div class="ui fluid category search">
-                    <div class="ui icon input">
-                        <input class="prompt" type="text" @keyup="search()" placeholder="What are you looking for?" class="form-control" v-model="query">
-                        <i class="search icon"></i>
+        <div class="ui stackable grid" style="text-align: center; padding: 1%;" >
+            <div class="eight wide column" >
+                <h2 class="ui header">
+                    <img class="ui image" src="/images/icons/search_file-512.png ">
+                    <div class="content">
+                        Наукометрична база:
                     </div>
-                </div>
+                </h2>
             </div>
 
+            <div class="eight wide column" style="">
+                <form class="ui form" role="form" method="POST" action="/">
+                    {{ csrf_field() }}
+                    <div class="form-group-sm">
 
+                        <div class="col-md-6">
+                            <select name="smbase" class="ui fluid dropdown">
+                                <option value="scholar_h_index" >Scholar</option>
+                                <option value="scopus_h_index" >Scopus</option>
+                            </select>
+                        </div>
+                        <input type="submit" class="ui black basic button">
 
-            <div class="alert alert-danger" role="alert" v-if="error">
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                @{{error}}
+                    </div>
+                </form>
             </div>
-
         </div>
-
-
-        </div>
-        <div class="column">
-
-            <div class="default text">Рік</div>
-            <div class="styled-select slate">
-                <select v-on:click="search()" v-model="query">
-                    <option disabled value="Scholar">Scholar</option>
-                    <option>Scholar</option>
-                    <option>Scopus</option>
-                </select>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="ui relaxed divided list" style="margin: 5%">
-            <div class="item" v-for="article in teachers">
-                <i class=""><img src="" height="22px"></i>
-                <div class="content">
-                    <a class="header" href="" >@{{article->fullname}}</a>
-                    <div class="description">@{{article.created_at}}</div>
-                </div>
-            </div>
-    </div>
 </section>
 
 

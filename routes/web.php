@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/', 'IndexController@index')->name('home');
 
 Route::get('/index', 'IndexController@index');
+Route::post('/', 'IndexController@store');
 Route::get('/abiturient', 'AbiturientController@index');
 Route::post('/abiturient', 'AbiturientController@store');
 
