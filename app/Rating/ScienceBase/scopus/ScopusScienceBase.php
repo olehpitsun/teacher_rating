@@ -10,15 +10,18 @@ namespace App\Rating\ScienceBase\scopus;
 
 use App\Rating\ScienceBase\IScienceBase;
 use App\Rating\ScienceBase\scopus\core\HIndex;
+use App\Teachers;
 
 class ScopusScienceBase implements IScienceBase
 {
     private static $SCBaseName = "ScopusScienceBase";
 
 
-    public function getHIndex($href)
+    public function getHIndex($id)
     {
-        return HIndex::getScopusHindex($href);
+        $teachers = Teachers::where('id', $id)->first();
+
+        return HIndex::getScopusHindex($teachers->scopus_href);
     }
 
     public function getSCBaseName()

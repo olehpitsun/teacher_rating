@@ -19,6 +19,5 @@ class HIndex
         preg_match_all('~<td class=[\'"]?gsc_rsb_std["\']?>(.+?)<\/td>~is', $html, $w);
 
         return $w[1][2];
-        //return 4;
     }
 }

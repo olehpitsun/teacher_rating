@@ -43,7 +43,7 @@ class IndexController extends Controller
 
                 $main->calculateHIndex($teacher->id);
 
-                $teachersEntity = new TeacherEntity($teacher->fullname);
+                $teachersEntity = new TeacherEntity($teacher->fullname, $teacher->image);
                 $teachersEntity->setScholarHIndex($main->getScholar());
                 $teachersEntity->setScopusHIndex($main->getScopus());
 

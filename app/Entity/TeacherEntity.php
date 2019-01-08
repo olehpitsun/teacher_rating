@@ -16,14 +16,16 @@ class TeacherEntity
     public $scholar_citation;
     public $scholar_h_index;
     public $scopus_h_index;
+    public $image;
 
     /**
      * TeacherEntity constructor.
      * @param $fullname
      */
-    public function __construct($fullname)
+    public function __construct($fullname, $image)
     {
         $this->fullname = $fullname;
+        $this->image = $image;
     }
 
     /**
@@ -34,6 +36,21 @@ class TeacherEntity
         return $this->fullname;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 
     /**
      * @return mixed
