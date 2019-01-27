@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+Use App\Scopus;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -64,3 +64,7 @@ Route::delete('task/{id}','TaskController@destroy');
 Route::put('task','TaskController@store');
 // create new task
 Route::post('task','TaskController@store');
+
+
+Route::get('scopus', 'ScopusController@index');
+Route::get('scopus/{id}', 'ScopusController@show');

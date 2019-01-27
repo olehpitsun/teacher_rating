@@ -7,25 +7,18 @@
  */
 
 namespace App\Rating\ScienceBase\scopus\core;
+use Illuminate\Http\Request;
 
 include './shd/simple_html_dom.php';
 
 class HIndex
 {
+    public static function getScopusHindex($teacher_id){
 
-    public static function getScopusHindex($href){
+        $request = Request::create('/api/scopus/'.$teacher_id, 'GET');
+        $res = app()->handle($request);
+        $responseBody = json_decode($res->getContent(), true);
 
-        $html = file_get_html($href);
-        //$d= mb_convert_encoding($html, 'utf-8', mb_detect_encoding($html));
-        //$html = file_get_contents($href);
-        /*
-        dd($html);
-        $links = array();
-        preg_match_all('~<span class=[\'"]?spanItalic["\']?>(.+?)<\/span>~is', $html, $w);
-        $links[] = $w;
-
-        dd($links);*/
-
-        return 3;
+        return $responseBody['scopus_index'];
     }
 }

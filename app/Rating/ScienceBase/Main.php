@@ -7,7 +7,6 @@
  */
 
 namespace App\Rating\ScienceBase;
-use App\Rating\ScienceBase\IScienceBase;
 
 class Main {
 
@@ -33,8 +32,6 @@ class Main {
                 $this->scopus_h_index = $Hvalue;
             }
         }
-
-        //return "Scholar = " . $this->scholar_h_index  . " Scopus = " . $this->scopus_h_index;
     }
 
     public function getHIndex($id, $IScienceBase)

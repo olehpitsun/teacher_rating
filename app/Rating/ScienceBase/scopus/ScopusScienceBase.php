@@ -21,7 +21,7 @@ class ScopusScienceBase implements IScienceBase
     {
         $teachers = Teachers::where('id', $id)->first();
 
-        return HIndex::getScopusHindex($teachers->scopus_href);
+        return HIndex::getScopusHindex($teachers->id);
     }
 
     public function getSCBaseName()
